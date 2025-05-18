@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Nico Fun</title>
+<style>
+  /* ========== CSS Global ========== */
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  body {
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+  }
+  /* Arrière-plan animé */
+  .background {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    background: linear-gradient(270deg, #000000 0%, #8B0000 25%, #000000 50%, #8B0000 75%, #000000 100%);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    filter: blur(4px);
+  }
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  /* Titre principal */
+  h1 {
+    font-size: 64px;
+    margin-bottom: 40px;
+    background: linear-gradient(45deg, #000000, #555555);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulseZoom 3s ease-in-out infinite;
+  }
+  @keyframes pulseZoom {
+    0%, 100% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+  /* Liens style bouton */
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 12px 28px;
+    border-radius: 12px;
+    margin: 10px;
+    color: inherit;
+    background-color: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFadeIn 1s ease forwards;
+    transition: background-color 0.3s ease;
+  }
+  a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  a img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  /* Couleurs spécifiques */
+  .discord {
+    color: #7289da; /* bleu Discord */
+    animation-delay: 1s;
+  }
+  .youtube {
+    color: #ff0000; /* rouge YouTube */
+    animation-delay: 1.3s;
+  }
+  .twitter {
+    color: #1DA1F2; /* bleu Twitter */
+    animation-delay: 1.6s;
+  }
+  @keyframes slideUpFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* Bouton chat */
+  #chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #8B0000;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+  }
+  #chat-button:hover {
+    background-color: #ff0000;
+  }
+  #chat-button img {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+  }
+  /* Fenêtre chat */
+  #chat-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 320px;
+    max-height: 400px;
+    background: rgba(20, 0, 0, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 0 10px #ff0000;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+  }
+  #chat-header {
+    background-color: #550000;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 14px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  #chat-input-container {
+    display: flex;
+    border-top: 1px solid #ff0000;
+  }
+  #chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #220000;
+    color: white;
+    font-size: 14px;
+    outline: none;
+  }
+  #chat-send-btn {
+    background: #ff0000;
+    border: none;
+    color: white;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #chat-send-btn:hover {
+    background-color: #cc0000;
+  }
+  /* Scrollbar chat */
+  #chat-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+  #chat-messages::-webkit-scrollbar-thumb {
+    background: #ff0000;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+  <!-- Fond animé -->
+  <div class="background"></div>
+  
+  <!-- Titre -->
+  <h1>Nico Fun</h1>
+  
+  <!-- Liens boutons -->
+  <a class="discord" href="https://discord.gg/cSwVuAhXKE" target="_blank" rel="noopener noreferrer" style="animation-delay:1s;">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord Logo" />
+    Rejoins mon serveur Discord
+  </a>
+  <a class="youtube" href="https://www.youtube.com/@TheNico24" target="_blank" rel="noopener noreferrer" style="animation-delay:1.3s;">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube Logo" />
+    Rejoins-moi sur YouTube
+  </a>
+
+  <!-- Bouton Chat -->
+  <div id="chat-button" title="Chat en ligne">
+    <img src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt="Chat Icon" />
+  </div>
+
+  <!-- Fenêtre Chat -->
+  <div id="chat-window">
+    <div id="chat-header">
+      Chat en ligne
+    </div>
+    <div id="chat-messages"></div>
+    <div id="chat-input-container">
+      <input type="text" id="chat-input" placeholder="Écris un message..." autocomplete="off" />
+      <button id="chat-send-btn">Envoyer</button>
+    </div>
+  </div>
+
+<script>
+  // Animation apparition liens au chargement
+  const links = document.querySelectorAll('a');
+  links.forEach((link, i) => {
+    setTimeout(() => {
+      link.style.opacity = '1';
+      link.style.transform = 'translateY(0)';
+    }, 500 + i * 300);
+  });
+
+  // Elements chat
+  const chatBtn = document.getElementById('chat-button');
+  const chatWindow = document.getElementById('chat-window');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSendBtn = document.getElementById('chat-send-btn');
+
+  // Ouvre/ferme fenêtre chat
+  chatBtn.addEventListener('click', () => {
+    if (chatWindow.style.display === 'flex') {
+      chatWindow.style.display = 'none';
+    } else {
+      chatWindow.style.display = 'flex';
+      chatInput.focus();
+    }
+  });
+
+  // Charge messages depuis localStorage
+  function loadMessages() {
+    const saved = localStorage.getItem('nicoChatMessages');
+    if (saved) {
+      const msgs = JSON.parse(saved);
+      chatMessages.innerHTML = '';
+      msgs.forEach(m => addMessageToDom(m.text, m.isBot));
+      // Scroll bas
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  }
+
+  // Sauvegarde messages dans localStorage
+  function saveMessages() {
+    const msgs = [];
+    chatMessages.querySelectorAll('.chat-message').forEach(div => {
+      msgs.push({
+        text: div.textContent,
+        isBot: div.classList.contains('bot')
+      });
+    });
+    localStorage.setItem('nicoChatMessages', JSON.stringify(msgs));
+  }
+
+  // Ajoute message à la vue
+  function addMessageToDom(text, isBot = false) {
+    const div = document.createElement('div');
+    div.classList.add('chat-message');
+    div.style.marginBottom = '8px';
+    div.style.padding = '6px 12px';
+    div.style.borderRadius = '10px';
+    div.style.maxWidth = '80%';
+    div.style.wordWrap = 'break-word';
+    div.textContent = text;
+    if (isBot) {
+      div.style.backgroundColor = 'rgba(255,0,0,0.7)';
+      div.style.alignSelf = 'flex-start';
+      div.classList.add('bot');
+    } else {
+      div.style.backgroundColor = 'rgba(80,0,0,0.7)';
+      div.style.alignSelf = 'flex-end';
+    }
+    chatMessages.appendChild(div);
+    // Scroll bas
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Envoi message utilisateur
+  function sendUserMessage() {
+    const text = chatInput.value.trim();
+    if (text === '') return;
+    addMessageToDom(text, false);
+    chatInput.value = '';
+    saveMessages();
+    // Exemple réponse bot automatique
+    setTimeout(() => {
+      sendBotMessage(`Tu as écrit : "${text}"`);
+    }, 800);
+  }
+
+  // Envoi message bot
+  function sendBotMessage(text) {
+    addMessageToDom(text, true);
+    saveMessages();
+  }
+
+  // Au chargement de la page
+  loadMessages();
+
+  // Event envoi message au clic bouton
+  chatSendBtn.addEventListener('click', sendUserMessage);
+
+  // Event envoi message à Enter
+  chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      sendUserMessage();
+    }
+  });
+</script>
+</body>
+</html>
